@@ -1,0 +1,3 @@
+install anaconda
+conda update --all
+conda install kivy -c conda-forge
