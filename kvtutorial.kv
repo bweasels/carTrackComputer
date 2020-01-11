@@ -1,0 +1,30 @@
+# Filename: kvtutorial.kv
+
+<MyGrid>:
+
+	name: name #global variable "name" references the id "name"
+	email: email #global variable "email" references the id "email"
+	
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		pos: 100, 100
+
+	GridLayout:
+		cols:2
+
+		Label:
+			text: "Name: "
+		TextInput:
+			id: name #sets the id of this text input to name
+			multiline:False
+			
+		Label:
+			text: "Email "
+		TextInput:
+			id: email #sets the id of this text input to email
+			multiline:False
+
+	Button:
+		text:"Submit"
+		on_press: root.btn() #references the button function in the grid widget
