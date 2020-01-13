@@ -4,13 +4,12 @@ Module storing the implementation of a circular progress bar in kivy.
     Refer to the in-code documentation of the class and its methods to learn about the tool. Includes a usage example.
 Authorship: Kacper Florianski
 """
-
 from kivy.uix.widget import Widget
 from kivy.app import App
 from kivy.core.text import Label
 from kivy.lang.builder import Builder
 from kivy.graphics import Line, Rectangle, Color
-from kivy.clock import Clock
+#from kivy.clock import Clock
 from collections.abc import Iterable
 from math import ceil
 
@@ -294,59 +293,3 @@ class CircularProgressBar(Widget):
             Rectangle(texture=self._text_label.texture, size=self._label_size,
                       pos=(self._widget_size / 2 - self._label_size[0] / 2 + self.pos[0],
                            self._widget_size / 2 - self._label_size[1] / 2 + self.pos[1]))
-
-
-#class _Example(App):
-
-    # Simple animation to show the circular progress bar in action
-#    def animate(self, dt):
-#        for bar in self.root.children[:-1]:
-#            if bar.value < bar.max:
-#                bar.value += 1
-#            else:
-#                bar.value = bar.min
-
-        # Showcase that setting the values using value_normalized property also works
-#        bar = self.root.children[-1]
-#        if bar.value < bar.max:
-#            bar.value_normalized += 0.01
-#        else:
-#            bar.value_normalized = 0
-
-#    # Simple layout for easy example
-#    def build(self):
-#        container = Builder.load_string('''
-#:import Label kivy.core.text.Label           
-#:set _label Label(text="\\nI am a label\\ninjected in kivy\\nmarkup string :)\\nEnjoy! --={}=--")
-#:set _another_label Label(text="Loading...\\n{}%", font_size=10, color=(1,1,0.5,1), halign="center")
-#FloatLayout:
-#    CircularProgressBar:
-#        pos: 50, 100
-#        thickness: 15
-#        cap_style: "RouND"
-#        progress_colour: "010"
-#        background_colour: "001"
-#        cap_precision: 3
-#        max: 150
-#        min: 100
-#        widget_size: 300
-#        label: _label
-#    CircularProgressBar
-#        pos: 400, 100
-#    CircularProgressBar
-#        pos: 650, 100
-#        cap_style: "SqUArE"
-#        thickness: 5
-#        progress_colour: 0.8, 0.8, 0.5, 1
-#        cap_precision:100
-#        max: 10
-#        widget_size: 100
-#        label: _another_label''')#
-
-        # Animate the progress bar
-#        Clock.schedule_interval(self.animate, 0.05)
-#        return container
-
-
-#if __name__ == '__main__':
-#    _Example().run()
