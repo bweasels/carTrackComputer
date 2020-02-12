@@ -9,7 +9,6 @@ from kivy.app import App
 from kivy.core.text import Label
 from kivy.lang.builder import Builder
 from kivy.graphics import Line, Rectangle, Color
-#from kivy.clock import Clock
 from collections.abc import Iterable
 from math import ceil
 
@@ -289,7 +288,7 @@ class CircularProgressBar(Widget):
                  width=self._thickness, cap=self._cap_style, cap_precision=self._cap_precision)
 
             # Center and draw the progress text
-            Color(1, 1, 1, 1)
+            Color(0, 0, 0, 1)
             Rectangle(texture=self._text_label.texture, size=self._label_size,
                       pos=(self._widget_size / 2 - self._label_size[0] / 2 + self.pos[0],
                            self._widget_size / 2 - self._label_size[1] / 2 + self.pos[1]))
