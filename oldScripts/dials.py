@@ -4,13 +4,12 @@ Module storing the implementation of a circular progress bar in kivy.
     Refer to the in-code documentation of the class and its methods to learn about the tool. Includes a usage example.
 Authorship: Kacper Florianski
 """
-from kivy.uix.widget import Widget
-from kivy.app import App
-from kivy.core.text import Label
-from kivy.lang.builder import Builder
-from kivy.graphics import Line, Rectangle, Color
 from collections.abc import Iterable
 from math import ceil
+
+from kivy.core.text import Label
+from kivy.graphics import Line, Rectangle, Color
+from kivy.uix.widget import Widget
 
 # This constant enforces the cap argument to be one of the caps accepted by the kivy.graphics.Line class
 _ACCEPTED_BAR_CAPS = {"round", "none", "square"}
@@ -24,7 +23,8 @@ _DEFAULT_BACKGROUND_COLOUR = (0.26, 0.26, 0.26, 1)
 _DEFAULT_MAX_PROGRESS = 100
 _DEFAULT_MIN_PROGRESS = 0
 _DEFAULT_WIDGET_SIZE = 200
-_DEFAULT_TEXT_LABEL = Label(text="{}%", font_size=40)
+#_DEFAULT_TEXT_LABEL = Label(text="{}%", font_size=40)
+_DEFAULT_TEXT_LABEL = Label(text="{}", font_size=40)
 
 # Declare the defaults for the normalisation function, these are used in the textual representation (multiplied by 100)
 _NORMALISED_MAX = 1

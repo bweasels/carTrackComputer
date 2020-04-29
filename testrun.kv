@@ -4,31 +4,36 @@ WindowManager:
 
 <TimingWindow>
 	name: 'timingWindow'
-	canvas.before:
-		Rectangle:
-			pos: self.pos
-			size: self.size
-			source: "images/FA20Engine4.png"
-	AVCSProgressBar:
-		id: AVCS_L_In
-		pos: 15, 353
-		thickness: 5
-		cap_style: "none"
-		progress_colour: "010"
-		background_colour: "001"
-		cap_precision: 3
-		max: 15
-		min: -15
-		widget_size: 116
+	#canvas.before:
+	#	Rectangle:
+	#		pos: self.pos
+	#		size: self.size
+	#		source: "images/FA20Engine4.png"
 
 	AVCSProgressBar:
-		id: AVCS_L_Ex
-		pos: 15, 100
-		thickness: 5
-		cap_style: "none"
-		progress_colour: "010"
-		background_colour: "001"
-		cap_precision: 3
-		max: 15
-		min: -15
-		widget_size: 116
+	    id: AVCS_L_IN
+        bar_name: "AVCS L IN"
+        max:15.0
+        min:-15.0
+        position: (10, 315)
+
+    AVCSProgressBar:
+	    id: AVCS_L_EX
+        bar_name: "AVCS L EX"
+        max:15.0
+        min:-15.0
+        position: (10, 35)
+
+	AVCSProgressBar:
+	    id: AVCS_R_IN
+        bar_name: "AVCS R IN"
+        max:15.0
+        min:-15.0
+        position: (120, 315)
+
+    AVCSProgressBar:
+	    id: AVCS_R_EX
+        bar_name: "AVCS R EX"
+        max:15.0
+        min:-15.0
+        position: (120, 35)
