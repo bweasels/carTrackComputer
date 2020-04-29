@@ -6,6 +6,7 @@ from kivy.config import Config
 from kivy.core.text import Label
 # from oldScripts.AVCSDials import AVCSProgressBar
 from oldScripts.AVCSBars import AVCSProgressBar
+from oldScripts.GenericBars import GenericBar
 from kivy.clock import Clock
 from random import random
 
@@ -39,7 +40,7 @@ class testRunApp(App):
         AVCSMeter2 = self.root.get_screen('timingWindow').ids.AVCS_L_EX
         AVCSMeter3 = self.root.get_screen('timingWindow').ids.AVCS_R_IN
         AVCSMeter4 = self.root.get_screen('timingWindow').ids.AVCS_R_EX
-
+        GenericBarTest = self.root.get_screen('timingWindow').ids.barTest
         # rand = random()
         # val_range = AVCSMeter1.max - AVCSMeter1.min
         # val = rand * val_range
@@ -49,12 +50,14 @@ class testRunApp(App):
             AVCSMeter2.value += 1.0
             AVCSMeter3.value += 1.0
             AVCSMeter4.value += 1.0
+            GenericBarTest.value += 1.0
 
         else:
             AVCSMeter1.value = AVCSMeter1.min
             AVCSMeter2.value = AVCSMeter2.min
             AVCSMeter3.value = AVCSMeter3.min
             AVCSMeter4.value = AVCSMeter4.min
+            GenericBarTest.value = GenericBarTest.min
 
     def build(self):
         Clock.schedule_interval(self.animate, 0.1)
