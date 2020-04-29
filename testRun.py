@@ -1,13 +1,9 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.floatlayout import FloatLayout
 from kivy.config import Config
-from kivy.core.text import Label
-from oldScripts.AVCSBars import AVCSProgressBar
-from oldScripts.GenericBars import GenericBar
+from specialized_classes.AVCSBars import AVCSProgressBar
 from kivy.clock import Clock
-from random import random
 
 Config.set('graphics', 'width', '1024')
 Config.set('graphics', 'height', '600')
@@ -31,7 +27,6 @@ class WindowManager(ScreenManager):
 
 kv = Builder.load_file("testrun.kv")
 
-
 class testRunApp(App):
     def animate(self, dt):
 
@@ -39,10 +34,7 @@ class testRunApp(App):
         AVCSMeter2 = self.root.get_screen('timingWindow').ids.AVCS_L_EX
         AVCSMeter3 = self.root.get_screen('timingWindow').ids.AVCS_R_IN
         AVCSMeter4 = self.root.get_screen('timingWindow').ids.AVCS_R_EX
-        # rand = random()
-        # val_range = AVCSMeter1.max - AVCSMeter1.min
-        # val = rand * val_range
-        # AVCSMeter1.value = val + AVCSMeter1.min
+
         if AVCSMeter1.value < AVCSMeter1.max:
             AVCSMeter1.value += 1.0
             AVCSMeter2.value += 1.0

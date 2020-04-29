@@ -4,7 +4,7 @@ Authorship: Ben Wesley
 """
 
 from kivy.graphics import Rectangle, Color, Line
-from oldScripts.GenericBars import GenericBar
+from base_classes.GenericBars import GenericBar
 
 _DEFAULT_BORDER_HEIGHT = 250
 
