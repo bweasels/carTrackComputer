@@ -15,7 +15,7 @@ _DEFAULT_MIN_VALUE = 0
 _DEFAULT_MAX_VALUE = 10
 _DEFAULT_NUM_POINTS = 10
 _DEFAULT_GRID_COLOR = (1, 1, 1, 1)
-
+_DEFAULT_TICK_RATIO = 0.02
 
 class GenericLinePlot(Widget):
     def __init__(self, **kwargs):
@@ -40,6 +40,7 @@ class GenericLinePlot(Widget):
                                int(self._position[1] + 0.1 * self._plot_area[1]),
                                int(self._position[0] + 0.1 * self._plot_area[0]),
                                int(self._position[1] + self._plot_area[1])]
+        self._tick_length = int(self._plot_area[1]*_DEFAULT_TICK_RATIO)
 
     @property
     def max(self):
@@ -140,6 +141,8 @@ class GenericLinePlot(Widget):
                                int(self._position[1] + 0.1 * self._plot_area[1]),
                                int(self._position[0] + self._plot_area[0]),
                                int(self._position[1] + 0.1 * self._plot_area[1])]
+        self._tick_length = int(self._plot_area[1]*_DEFAULT_TICK_RATIO)
+
 
     def _draw(self):
         """
@@ -157,5 +160,10 @@ class GenericLinePlot(Widget):
             Color(self._grid_color)
             Line(points=self._y_axis_points, width=2)
             Line(points=self._x_axis_points, width=2)
-            print(self._num_points)
-                print i
+            print(self._x_axis_points)
+            gap = int((self._x_axis_points[2] - self._x_axis_points[0]) / self._num_points)
+            for i in range(self._num_points):
+                Line(points=[self._x_axis_points[0] + gap * (i + 1),
+                             self._x_axis_points[1] - self._tick_length,
+                             self._x_axis_points[0] + gap * (i + 1),
+                             self._x_axis_points[1]], width=2)
