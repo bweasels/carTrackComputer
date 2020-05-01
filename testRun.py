@@ -4,6 +4,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.config import Config
 from specialized_classes.AVCSBars import AVCSProgressBar
 from kivy.clock import Clock
+from base_classes.genericPlot import GenericLinePlot
+from random import randint
 
 Config.set('graphics', 'width', '1024')
 Config.set('graphics', 'height', '600')
@@ -34,12 +36,16 @@ class testRunApp(App):
         AVCSMeter2 = self.root.get_screen('timingWindow').ids.AVCS_L_EX
         AVCSMeter3 = self.root.get_screen('timingWindow').ids.AVCS_R_IN
         AVCSMeter4 = self.root.get_screen('timingWindow').ids.AVCS_R_EX
+        Test = self.root.get_screen('timingWindow').ids.TestLine
+        counter = float(randint(1, 10))
+        Test.add_value((counter, counter))
 
         if AVCSMeter1.value < AVCSMeter1.max:
             AVCSMeter1.value += 1.0
             AVCSMeter2.value += 1.0
             AVCSMeter3.value += 1.0
             AVCSMeter4.value += 1.0
+
 
         else:
             AVCSMeter1.value = AVCSMeter1.min

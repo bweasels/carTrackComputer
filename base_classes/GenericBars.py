@@ -91,7 +91,7 @@ class GenericBar(Widget):
                              .format(value, self._max_progress))
         else:
             self._min_progress = value
-            self._value = value
+#            self._value = value
 
     @property
     def value(self):
@@ -158,10 +158,10 @@ class GenericBar(Widget):
         """
         Function used to draw the progress bar onto the screen.
         The drawing process is as follows:
-            1. Clear the canvas
-            2. Draw the background progress line (360 degrees)
+            1. Clear the canvas & get new values
+            2. Draw the bounding box around the progress line
             3. Draw the actual progress line (N degrees where n is between 0 and 360)
-            4. Draw the textual representation of progress in the middle of the circle
+            4. Draw the number value in the middle of the plot and the label on top
         """
         with self.canvas:
             self.canvas.clear()

@@ -42,8 +42,8 @@ class AVCSProgressBar(GenericBar):
         progress = progress_value / progress_range
 
         # set the color values
-        bval = 1 - progress
-        rval = progress
+        bval = 1 - progress**2
+        rval = progress**2
         alpha = abs(-0.5 + progress) + 0.5
         gval = abs(alpha - 1)
 
@@ -51,12 +51,10 @@ class AVCSProgressBar(GenericBar):
 
     def _draw(self):
         """
-        Function used to draw the progress bar onto the screen.
-        The drawing process is as follows:
-            1. Clear the canvas
-            2. Draw the background progress line (360 degrees)
-            3. Draw the actual progress line (N degrees where n is between 0 and 360)
-            4. Draw the textual representation of progress in the middle of the circle
+        Function used to draw an AVCS specific progress bar onto the screen.
+        Changes from GenericBars.py
+            1. Bar starts centered
+            2. Bar becomes bluer as timing is retarded (neg AVCS), red for advance (pos AVCS)
         """
         with self.canvas:
             self.canvas.clear()
