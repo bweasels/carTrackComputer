@@ -37,21 +37,28 @@ class testRunApp(App):
         AVCSMeter3 = self.root.get_screen('timingWindow').ids.AVCS_R_IN
         AVCSMeter4 = self.root.get_screen('timingWindow').ids.AVCS_R_EX
         Test = self.root.get_screen('timingWindow').ids.TestLine
-        counter = float(randint(1, 10))
-        Test.add_value((counter, counter))
+        #counter = float(randint(1, 10))
+        #Test.add_value((counter, counter))
+
+        if len(Test.values[0]) == 0:
+            Test.add_value((1.0, 1.0))
 
         if AVCSMeter1.value < AVCSMeter1.max:
             AVCSMeter1.value += 1.0
             AVCSMeter2.value += 1.0
             AVCSMeter3.value += 1.0
             AVCSMeter4.value += 1.0
-
+            number = Test.values[0][-1]
+            Test.add_value((number+1, number+1))
 
         else:
             AVCSMeter1.value = AVCSMeter1.min
             AVCSMeter2.value = AVCSMeter2.min
             AVCSMeter3.value = AVCSMeter3.min
             AVCSMeter4.value = AVCSMeter4.min
+            Test.add_value((Test.min, Test.min))
+
+
 
     def build(self):
         Clock.schedule_interval(self.animate, 0.1)

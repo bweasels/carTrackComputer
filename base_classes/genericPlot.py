@@ -3,19 +3,17 @@ Module storing the implementation of line graphs
 Authorship: Ben Wesley
 """
 
-# from kivy.app import App
-# from kivy.graphics import Line
-# from kivy.graphics.texture import Texture
 from kivy.uix.widget import Widget
-from kivy.graphics import Line, Rectangle, Color
+from kivy.graphics import Line, Color
 
 _DEFAULT_PLOT_AREA = (100, 100)
 _DEFAULT_POSITION = (100, 100)
 _DEFAULT_MIN_VALUE = 0
 _DEFAULT_MAX_VALUE = 10
-_DEFAULT_NUM_POINTS = 10
+_DEFAULT_NUM_POINTS = 100
 _DEFAULT_GRID_COLOR = (1, 1, 1, 1)
 _DEFAULT_TICK_RATIO = 0.02
+
 
 class GenericLinePlot(Widget):
     def __init__(self, **kwargs):
@@ -40,7 +38,8 @@ class GenericLinePlot(Widget):
                                int(self._position[1] + 0.1 * self._plot_area[1]),
                                int(self._position[0] + 0.1 * self._plot_area[0]),
                                int(self._position[1] + self._plot_area[1])]
-        self._tick_length = int(self._plot_area[1]*_DEFAULT_TICK_RATIO)
+        self._tick_length = int(self._plot_area[1] * _DEFAULT_TICK_RATIO)
+        self._tick_gap = int((self._x_axis_points[2] - self._x_axis_points[0]) / self._num_points)
 
     @property
     def max(self):
@@ -80,7 +79,7 @@ class GenericLinePlot(Widget):
             raise TypeError('position only accepts a tuple, not {}!'.format(type(value)))
         else:
             self._position = value
-            self.update_axes()
+            self._draw_axes()
 
     @property
     def plot_area(self):
@@ -92,7 +91,7 @@ class GenericLinePlot(Widget):
             raise TypeError('plot_area only accepts a tuple, not {}!'.format(type(value)))
         else:
             self._plot_area = value
-            self.update_axes()
+            self._draw_axes()
 
     @property
     def values(self):
@@ -110,6 +109,10 @@ class GenericLinePlot(Widget):
         # use the inputted lists as the buffer starter
         self._x_values = values[0]
         self._y_values = values[1]
+
+        # take the inputted list and get min and max values from it
+        self._min_value = min(self._y_values)
+        self._max_value = max(self._y_values)
         self._draw()
 
     def add_value(self, value: tuple):
@@ -130,9 +133,18 @@ class GenericLinePlot(Widget):
         else:
             self._x_values.append(value[0])
             self._y_values.append(value[1])
+
+        # if there is only one element in the data, use defaults
+        # otherwise calculate the min/max values
+        if len(self._x_values) <= 1:
+            self._min_value = _DEFAULT_MIN_VALUE
+            self._max_value = _DEFAULT_MAX_VALUE
+        else:
+            self._min_value = min(self._y_values)
+            self._max_value = max(self._y_values)
         self._draw()
 
-    def update_axes(self):
+    def _draw_axes(self):
         self._y_axis_points = [int(self._position[0] + 0.1 * self._plot_area[0]),
                                int(self._position[1] + 0.1 * self._plot_area[1]),
                                int(self._position[0] + 0.1 * self._plot_area[0]),
@@ -141,8 +153,30 @@ class GenericLinePlot(Widget):
                                int(self._position[1] + 0.1 * self._plot_area[1]),
                                int(self._position[0] + self._plot_area[0]),
                                int(self._position[1] + 0.1 * self._plot_area[1])]
-        self._tick_length = int(self._plot_area[1]*_DEFAULT_TICK_RATIO)
+        self._tick_length = int(self._plot_area[1] * _DEFAULT_TICK_RATIO)
+        self._tick_gap = (self._x_axis_points[2] - self._x_axis_points[0]) / self._num_points
 
+        # draw the axes
+        Line(points=self._y_axis_points, width=2)
+        Line(points=self._x_axis_points, width=2)
+
+        # go through and plot out tick marks in a for loop :/
+        for i in range(self._num_points):
+            Line(points=[self._x_axis_points[0] + self._tick_gap * (i + 1),
+                         self._x_axis_points[1] - self._tick_length,
+                         self._x_axis_points[0] + self._tick_gap * (i + 1),
+                         self._x_axis_points[1]], width=2)
+
+    def _draw_points(self):
+        y_steps = self._y_axis_points[3] - self._y_axis_points[1]
+        y_steps = y_steps / (self._max_value - self._min_value)
+        y_coord = [value - self._min_value for value in self._y_values]
+        y_coord = [(value * y_steps) + self._y_axis_points[1] for value in y_coord]
+
+        x_coord = [i * self._tick_gap + self._x_axis_points[0] for i in range(len(self._x_values))]
+
+        for i in range(len(y_coord))[1:]:
+            Line(points=[x_coord[i-1], y_coord[i-1], x_coord[i], y_coord[i]])
 
     def _draw(self):
         """
@@ -158,12 +192,6 @@ class GenericLinePlot(Widget):
 
             # plot the axes and tick marks
             Color(self._grid_color)
-            Line(points=self._y_axis_points, width=2)
-            Line(points=self._x_axis_points, width=2)
-            print(self._x_axis_points)
-            gap = int((self._x_axis_points[2] - self._x_axis_points[0]) / self._num_points)
-            for i in range(self._num_points):
-                Line(points=[self._x_axis_points[0] + gap * (i + 1),
-                             self._x_axis_points[1] - self._tick_length,
-                             self._x_axis_points[0] + gap * (i + 1),
-                             self._x_axis_points[1]], width=2)
+            self._draw_axes()
+
+            self._draw_points()
