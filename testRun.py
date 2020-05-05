@@ -37,8 +37,6 @@ class testRunApp(App):
         AVCSMeter3 = self.root.get_screen('timingWindow').ids.AVCS_R_IN
         AVCSMeter4 = self.root.get_screen('timingWindow').ids.AVCS_R_EX
         Test = self.root.get_screen('timingWindow').ids.TestLine
-        #counter = float(randint(1, 10))
-        #Test.add_value((counter, counter))
 
         if len(Test.values[0]) == 0:
             Test.add_value((1.0, 1.0))
